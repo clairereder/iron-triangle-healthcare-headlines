@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading the Iron Triangle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef1f3; --card:#fbfcfb; --ink:#1a212b; --muted:#5c6672;
+    --rule:#d7dde1; --rule-strong:#b9c2c8;
+    --access:#2f6db0; --cost:#bd842c; --quality:#3c7a55;
+    --up:#3c7a55; --down:#b0483a; --neu:#6b7480; --uns:#a9762a;
+    --focus:#2f6db0;
+    --serif:"Newsreader",Georgia,"Times New Roman",serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;
+    -webkit-font-smoothing:antialiased;padding:24px 16px}
+  .wrap{max-width:760px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,6vw,46px);line-height:1.04;
+    margin:.25rem 0 .5rem;letter-spacing:-.01em}
+  .lede{font-size:16px;color:var(--muted);max-width:60ch;margin:0 0 1.25rem}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:10px 0;margin-bottom:22px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+  .card{background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;
+    box-shadow:0 1px 0 rgba(26,33,43,.04);overflow:hidden}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:12px 20px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted)}
+  .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+    border:1px solid var(--rule-strong);border-radius:999px;padding:3px 10px;color:var(--ink)}
+  .clip{padding:22px 24px 8px}
+  .clip .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin-bottom:8px}
+  .clip h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,4.4vw,30px);line-height:1.12;
+    margin:0 0 6px;letter-spacing:-.01em}
+  .clip .byline{font-size:12px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--rule);
+    padding-bottom:14px}
+  .grid{display:grid;grid-template-columns:1fr 168px;gap:22px;padding:18px 24px 4px;align-items:start}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .prompt{font-size:13px;color:var(--muted);margin:0 0 12px}
+  .row{border-top:1px solid var(--rule);padding:11px 0}
+  .row:first-of-type{border-top:none}
+  .rlabel{font-weight:600;font-size:14px;margin-bottom:7px;display:flex;align-items:center}
+  .opts{display:flex;gap:6px;flex-wrap:wrap}
+  .opt{font-family:var(--sans);font-size:12.5px;padding:6px 11px;border:1px solid var(--rule-strong);
+    background:#fff;border-radius:3px;cursor:pointer;color:var(--ink);transition:.12s}
+  .opt:hover{border-color:var(--ink)}
+  .opt:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+  .opt[aria-pressed="true"]{color:#fff;border-color:transparent}
+  .row[data-dim="access"] .opt[aria-pressed="true"]{background:var(--access)}
+  .row[data-dim="cost"] .opt[aria-pressed="true"]{background:var(--cost)}
+  .row[data-dim="quality"] .opt[aria-pressed="true"]{background:var(--quality)}
+  svg{width:100%;height:auto}
+  .actions{display:flex;gap:10px;padding:8px 24px 20px;flex-wrap:wrap;align-items:center}
+  .btn{font-family:var(--sans);font-weight:600;font-size:14px;padding:9px 18px;border-radius:3px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:#fff}
+  .btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .analysis{border-top:1px solid var(--rule);padding:4px 24px 20px;display:none}
+  .analysis.show{display:block}
+  .aline{padding:12px 0;border-top:1px solid var(--rule)}
+  .aline:first-child{border-top:none}
+  .ahead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .aname{font-weight:600;width:66px}
+  .chip{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+  .yours{font-size:12px;color:var(--muted)}
+  .anote{font-size:14px;color:#39424e;margin:0}
+  .tension{background:#f2ede3;border:1px solid #e3d8c2;border-radius:3px;padding:12px 14px;margin-top:14px;font-size:14px}
+  .tension b{font-weight:600}
+  .stake{font-size:14px;color:#39424e;margin:12px 0 0}
+  .stake b{color:var(--ink)}
+  .disc{font-size:12px;color:var(--muted);margin-top:12px}
+  .foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--rule);font-size:13px}
+  .count{color:var(--muted)}
+  .edge{stroke:var(--rule-strong);stroke-width:2;transition:.2s}
+  .edge.hot{stroke:var(--down);stroke-width:3.5}
+  .summary{text-align:center;padding:34px 24px}
+  .summary h2{font-family:var(--serif);font-weight:500;font-size:26px;margin:0 0 8px}
+  .summary p{color:var(--muted);max-width:48ch;margin:0 auto 18px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Health policy · Iron Triangle</div>
+    <h1>Reading the Iron Triangle</h1>
+    <p class="lede">Every health policy pulls on three connected goals — <strong>access</strong>, <strong>cost</strong>, and <strong>quality</strong>. You rarely move all three the same way at once. Read each headline, predict where it pushes each goal, then compare with an analyst's read.</p>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--access)"></span>Access — can people get care</span>
+      <span><span class="dot" style="background:var(--cost)"></span>Cost — what the system pays</span>
+      <span><span class="dot" style="background:var(--quality)"></span>Quality — how good the care is</span>
+    </div>
+  </header>
+
+  <div class="card" id="card">
+    <div class="topbar">
+      <span class="count" id="count"></span>
+      <span class="tag" id="tag"></span>
+    </div>
+
+    <div class="clip">
+      <div class="kicker">In the news</div>
+      <h2 id="headline"></h2>
+      <div class="byline" id="byline"></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <p class="prompt">For each goal, predict the most likely effect:</p>
+        <div id="rows"></div>
+      </div>
+      <div>
+        <svg viewBox="0 0 168 150" role="img" aria-label="Iron triangle: access at top, cost bottom right, quality bottom left">
+          <line class="edge" id="e-aq" x1="84" y1="20" x2="20" y2="130"/>
+          <line class="edge" id="e-ac" x1="84" y1="20" x2="148" y2="130"/>
+          <line class="edge" id="e-cq" x1="20" y1="130" x2="148" y2="130"/>
+          <circle cx="84" cy="20" r="7" fill="var(--access)"/>
+          <circle cx="148" cy="130" r="7" fill="var(--cost)"/>
+          <circle cx="20" cy="130" r="7" fill="var(--quality)"/>
+          <text x="84" y="12" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Access</text>
+          <text x="148" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Cost</text>
+          <text x="20" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Quality</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="reveal">Reveal analysis</button>
+      <button class="btn ghost" id="clear">Clear</button>
+    </div>
+
+    <div class="analysis" id="analysis"></div>
+
+    <div class="foot">
+      <button class="btn ghost" id="prev">‹ Previous</button>
+      <button class="btn ghost" id="next">Next ›</button>
+    </div>
+  </div>
+
+  <div class="card summary" id="summary" style="display:none">
+    <h2>That's the full set</h2>
+    <p>You worked through every scenario. The pattern to carry forward: naming <em>which</em> two goals trade off — and <em>which</em> stakeholder feels each one — is the whole skill.</p>
+    <button class="btn" id="restart">Start over</button>
+  </div>
+</div>
+
+<script>
+const DIR = {
+  up:{label:"Improves",color:"var(--up)"},
+  down:{label:"Worsens",color:"var(--down)"},
+  neutral:{label:"Neutral",color:"var(--neu)"},
+  unsure:{label:"Undetermined",color:"var(--uns)"}
+};
+const DIMS = [
+  {id:"access",name:"Access"},
+  {id:"cost",name:"Cost"},
+  {id:"quality",name:"Quality"}
+];
+const SCENARIOS = [
+  {
+    tag:"Policy",
+    headline:"State votes to extend Medicaid-style coverage to undocumented immigrants",
+    byline:"A large uninsured population would gain a route to coverage.",
+    access:{a:"up", note:"A group that was mostly locked out gains a path to regular care."},
+    cost:{a:"up", note:"Total public spending rises as newly covered people use more services. 'Worsens' here means higher system cost."},
+    quality:{a:"unsure", note:"Depends on capacity. If clinics are already full, more patients can strain appointment availability rather than change the care itself."},
+    tension:"e-ac", tlabel:"Access vs. Cost",
+    tnote:"Covering more people is the clearest way to raise access — and the clearest way to raise total cost. That trade-off sits at the center of most coverage debates.",
+    stake:"Government and payers absorb the new cost, providers gain patients, and patients gain access. The disagreement is really about who pays."
+  },
+  {
+    tag:"Policy",
+    headline:"Insurer expands telehealth coverage for mental health visits",
+    byline:"Low-barrier virtual appointments, no waiting room.",
+    access:{a:"up", note:"Convenient, low-barrier entry — a real gain for rural or time-pressed patients."},
+    cost:{a:"unsure", note:"Each visit is often cheaper, but easier access can lift total volume, so the net cost is genuinely uncertain."},
+    quality:{a:"down", note:"The core worry: convenience can mean a thinner evaluation and easier prescribing without in-person follow-up."},
+    tension:"e-aq", tlabel:"Access vs. Quality",
+    tnote:"The same feature that widens access — you can be seen in minutes from home — is what raises the quality concern. Access up, quality at risk.",
+    stake:"Patients value the convenience, many clinicians worry about the depth of care, and payers watch utilization. One policy, three reactions."
+  },
+  {
+    tag:"Policy",
+    headline:"Medicare lowers reimbursement rates to hospitals to curb spending",
+    byline:"A move aimed squarely at the cost line.",
+    cost:{a:"up", note:"Program spending falls — an improvement from the payer's point of view."},
+    access:{a:"down", note:"Some hospitals limit Medicare patients or cut service lines when margins tighten."},
+    quality:{a:"unsure", note:"Thinner margins can pressure staffing and investment, but the effect varies a lot by system."},
+    tension:"e-ac", tlabel:"Cost vs. Access",
+    tnote:"Pushing the cost corner down pushes back on access: pay providers less and some of them see fewer of those patients.",
+    stake:"Government saves money, providers get squeezed, and patients may feel it as a wait or a closed door. Lowering cost rarely comes free."
+  },
+  {
+    tag:"Product",
+    headline:"New specialty drug shows strong results — and a six-figure price tag",
+    byline:"A clinical breakthrough arrives at a steep cost.",
+    quality:{a:"up", note:"For the right patients, outcomes genuinely improve — this is real clinical value."},
+    cost:{a:"up", note:"A very high price, multiplied across everyone who needs it, drives spending up fast."},
+    access:{a:"unsure", note:"Depends on coverage rules. Strict prior authorization or high cost-sharing can keep it out of reach even when it works."},
+    tension:"e-ac", tlabel:"Quality vs. Cost",
+    tnote:"Product innovation often buys better quality — but the bill lands on the cost corner, and coverage rules then decide who actually gets access.",
+    stake:"Manufacturers price to value, payers manage the budget hit, and patients sit between a better option and what their plan will cover."
+  },
+  {
+    tag:"Policy",
+    headline:"Health plan adds prior-authorization requirement for high-cost imaging",
+    byline:"Approval now needed before an MRI is scheduled.",
+    cost:{a:"up", note:"Screening out low-value scans trims spending — a cost improvement for the plan."},
+    access:{a:"down", note:"Approval steps add delay and paperwork; some needed scans are postponed or dropped."},
+    quality:{a:"unsure", note:"Fewer unnecessary scans can help; delayed necessary ones can hurt. It cuts both ways."},
+    tension:"e-ac", tlabel:"Cost vs. Access",
+    tnote:"Utilization management is a classic cost lever — and its cost is friction: slower, harder access, even when the care is appropriate.",
+    stake:"Payers save and reduce waste, providers carry the administrative load, and patients face the delay. The label 'waste' depends on where you sit."
+  },
+  {
+    tag:"Product",
+    headline:"Retail chains open low-cost walk-in clinics across the region",
+    byline:"Care beside the pharmacy aisle, evenings and weekends.",
+    access:{a:"up", note:"Nights, weekends, no appointment — a clear widening of everyday access."},
+    cost:{a:"unsure", note:"May divert costly ER visits (savings) or add visits that wouldn't have happened (more spending). Net effect is unsettled."},
+    quality:{a:"unsure", note:"Fine for simple needs, but care split across many walk-ins can fragment the fuller picture a regular clinician would hold."},
+    tension:"e-aq", tlabel:"Access vs. Continuity of care",
+    tnote:"Convenience expands access, but scattering visits across many sites can chip at continuity — one strand of quality.",
+    stake:"Patients gain convenience, primary-care providers worry about fragmented records, and payers weigh diverted ER use against new demand."
+  }
+];
+
+let i = 0;
+const picks = {};
+const $ = id => document.getElementById(id);
+
+function chip(dir){ const d=DIR[dir]; return `<span class="chip" style="background:${d.color}">${d.label}</span>`; }
+
+function render(){
+  $("summary").style.display="none";
+  $("card").style.display="";
+  const s = SCENARIOS[i];
+  $("count").textContent = `Scenario ${i+1} of ${SCENARIOS.length}`;
+  $("tag").textContent = s.tag==="Product" ? "Product innovation" : "Policy innovation";
+  $("headline").textContent = s.headline;
+  $("byline").textContent = s.byline;
+  $("rows").innerHTML = DIMS.map(d=>`
+    <div class="row" data-dim="${d.id}">
+      <div class="rlabel"><span class="dot" style="background:var(--${d.id})"></span>${d.name}</div>
+      <div class="opts">
+        ${Object.keys(DIR).map(k=>`<button class="opt" data-dim="${d.id}" data-val="${k}" aria-pressed="${picks[i]&&picks[i][d.id]===k}">${DIR[k].label}</button>`).join("")}
+      </div>
+    </div>`).join("");
+  $("rows").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    picks[i]=picks[i]||{}; picks[i][b.dataset.dim]=b.dataset.val; render();
+  });
+  const an=$("analysis"); an.classList.remove("show"); an.innerHTML="";
+  ["e-aq","e-ac","e-cq"].forEach(e=>$(e).classList.remove("hot"));
+  $("prev").disabled = i===0;
+  $("next").textContent = i===SCENARIOS.length-1 ? "Finish ›" : "Next ›";
+}
+
+function reveal(){
+  const s=SCENARIOS[i]; const mine=picks[i]||{};
+  let html="";
+  DIMS.forEach(d=>{
+    const exp=s[d.id].a; const you=mine[d.id];
+    const youTxt = you ? `you predicted ${DIR[you].label}${you===exp?" ✓":""}` : "no prediction";
+    html+=`<div class="aline">
+      <div class="ahead"><span class="aname">${d.name}</span>${chip(exp)}<span class="yours">${youTxt}</span></div>
+      <p class="anote">${s[d.id].note}</p></div>`;
+  });
+  html+=`<div class="tension"><b>Tension in play — ${s.tlabel}.</b> ${s.tnote}</div>`;
+  html+=`<p class="stake"><b>Who feels it:</b> ${s.stake}</p>`;
+  html+=`<p class="disc">These are the most likely directions, not guarantees — reasonable analysts can weigh them differently.</p>`;
+  const an=$("analysis"); an.innerHTML=html; an.classList.add("show");
+  $(s.tension).classList.add("hot");
+}
+
+$("reveal").onclick=reveal;
+$("clear").onclick=()=>{picks[i]={};render();};
+$("prev").onclick=()=>{if(i>0){i--;render();}};
+$("next").onclick=()=>{
+  if(i===SCENARIOS.length-1){ $("card").style.display="none"; $("summary").style.display=""; }
+  else { i++; render(); }
+};
+$("restart").onclick=()=>{i=0;render();};
+render();
+</script>
+</body>
+</html>
