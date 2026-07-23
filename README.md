@@ -1,1 +1,1 @@
-# iron-triangle-healthcare-headlines
+# Iron Triangle Healthcare Headlines
