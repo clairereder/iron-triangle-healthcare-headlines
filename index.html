@@ -27,19 +27,16 @@
   .lede{font-size:16px;color:var(--muted);max-width:60ch;margin:0 0 1.25rem}
   .legend{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:10px 0;margin-bottom:18px}
   .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
-  .tabs{display:flex;gap:2px;margin-bottom:18px;border-bottom:1px solid var(--rule-strong)}
-  .tab{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--muted);background:none;border:none;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
-  .tab:hover{color:var(--ink)}
-  .tab.active{color:var(--brand);font-weight:600;border-bottom-color:var(--brand)}
-  .tab:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
   .card{background:var(--card);border:1px solid var(--rule-strong);border-top:3px solid var(--brand);border-radius:4px;box-shadow:0 1px 0 rgba(26,33,43,.04);overflow:hidden}
   .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted)}
   .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid var(--rule-strong);border-radius:999px;padding:3px 10px;color:var(--ink)}
   .clip{padding:22px 24px 8px}
   .clip .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
   .clip h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,4.4vw,30px);line-height:1.12;margin:0 0 6px;letter-spacing:-.01em}
-  .clip .byline{font-size:12px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--rule);padding-bottom:14px}
-  .grid{display:grid;grid-template-columns:1fr 168px;gap:22px;padding:18px 24px 4px;align-items:start}
+  .clip .byline{font-size:12px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--rule);padding-bottom:12px}
+  .newsnote{font-size:12.5px;color:var(--muted);font-style:italic;padding:10px 0 2px;line-height:1.5}
+  .newsnote b{font-style:normal;font-weight:600;color:var(--brand)}
+  .grid{display:grid;grid-template-columns:1fr 168px;gap:22px;padding:16px 24px 4px;align-items:start}
   @media(max-width:560px){.grid{grid-template-columns:1fr}}
   .prompt{font-size:13px;color:var(--muted);margin:0 0 12px}
   .row{border-top:1px solid var(--rule);padding:11px 0}
@@ -56,10 +53,10 @@
   svg{width:100%;height:auto}
   .actions{display:flex;gap:10px;padding:8px 24px 20px;flex-wrap:wrap;align-items:center}
   .btn{font-family:var(--sans);font-weight:600;font-size:14px;padding:9px 18px;border-radius:3px;cursor:pointer;border:1px solid var(--brand);background:var(--brand);color:#fff}
-  .btn:hover{background:var(--brand-d);border-color:var(--brand-d)}
+  .btn:hover:not(.ghost){background:var(--brand-d);border-color:var(--brand-d)}
   .btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
-  .btn.ghost:hover{background:transparent;border-color:var(--brand);color:var(--brand)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:rgba(15,122,67,.08)}
   .btn:disabled{opacity:.4;cursor:not-allowed}
   .analysis{border-top:1px solid var(--rule);padding:4px 24px 20px;display:none}
   .analysis.show{display:block}
@@ -70,10 +67,15 @@
   .chip{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
   .yours{font-size:12px;color:var(--muted)}
   .anote{font-size:14px;color:#39424e;margin:0}
+  .both{margin-top:9px;background:#f4f6f4;border:1px solid var(--rule);border-radius:4px;padding:9px 12px}
+  .bothlab{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+  .bothrow{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:#39424e;margin-top:3px;line-height:1.45}
+  .bi{font-weight:700;flex:none}
+  .bi.up{color:var(--up)} .bi.down{color:var(--down)}
   .tension{background:#f2ede3;border:1px solid #e3d8c2;border-radius:3px;padding:12px 14px;margin-top:14px;font-size:14px}
   .tension b{font-weight:600}
   .stake{font-size:14px;color:#39424e;margin:12px 0 0}.stake b{color:var(--ink)}
-  .disc{font-size:12px;color:var(--muted);margin-top:12px}
+  .disc{font-size:12.5px;color:var(--muted);margin-top:12px;border-top:1px dashed var(--rule);padding-top:10px;line-height:1.5}
   .foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--rule);font-size:13px}
   .count{color:var(--muted)}
   .edge{stroke:var(--rule-strong);stroke-width:2;transition:.2s}
@@ -81,37 +83,6 @@
   .summary{text-align:center;padding:34px 24px}
   .summary h2{font-family:var(--serif);font-weight:500;font-size:26px;margin:0 0 8px}
   .summary p{color:var(--muted);max-width:48ch;margin:0 auto 18px}
-  /* ---- Part 2: expenditures calculator ---- */
-  .intro2{padding:20px 24px 4px}
-  .intro2 h2{font-family:var(--serif);font-weight:500;font-size:24px;margin:0 0 6px}
-  .intro2 .eq{font-family:var(--serif);font-size:18px;margin:0 0 8px}
-  .intro2 .eq b{font-style:italic}
-  .intro2 p{font-size:14px;color:var(--muted);margin:0;max-width:64ch}
-  .calc{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:18px 24px 4px}
-  @media(max-width:600px){.calc{grid-template-columns:1fr}}
-  .panel-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
-  .field{margin-bottom:18px}
-  .field .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:7px}
-  .field .lab b{font-weight:600}
-  .field .val{font-weight:600;font-variant-numeric:tabular-nums}
-  input[type=range]{width:100%;accent-color:var(--brand);height:22px}
-  .cap{font-size:12px;color:var(--muted);border-left:2px solid var(--cost);padding-left:10px;margin-top:2px}
-  .presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-  .preset{font-family:var(--sans);font-size:12.5px;padding:6px 10px;border:1px solid var(--rule-strong);background:#fff;border-radius:3px;cursor:pointer;color:var(--ink)}
-  .preset:hover{border-color:var(--brand);color:var(--brand)}
-  .preset:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
-  .tlabel{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
-  .total{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1;letter-spacing:-.01em}
-  .delta{font-size:13px;font-weight:600;margin-top:6px;min-height:18px}
-  .delta.up{color:var(--down)}.delta.down{color:var(--up)}.delta.flat{color:var(--muted)}
-  .plotwrap{margin-top:16px}
-  .axy{font-size:11px;color:var(--muted);margin-bottom:4px}
-  .plot{position:relative;height:200px;border-left:2px solid var(--rule-strong);border-bottom:2px solid var(--rule-strong)}
-  .box{position:absolute;left:0;bottom:0;background:rgba(189,132,44,.18);border-top:2px solid var(--cost);border-right:2px solid var(--cost);transition:width .3s ease,height .3s ease}
-  .axx{font-size:11px;color:var(--muted);text-align:right;margin-top:4px}
-  .note{padding:2px 24px 8px}
-  .note .big{background:#f2ede3;border:1px solid #e3d8c2;border-radius:3px;padding:11px 14px;font-size:14px;color:#39424e}
-  .note .big b{color:var(--ink)}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -129,96 +100,74 @@
     </div>
   </header>
 
-  <div class="tabs" role="tablist">
-    <button class="tab active" data-part="1" role="tab" aria-selected="true">1 · Read the headline</button>
-    <button class="tab" data-part="2" role="tab" aria-selected="false">2 · Price × Quantity</button>
+  <div class="card" id="card">
+    <div class="topbar"><span class="count" id="count"></span><span class="tag" id="tag"></span></div>
+    <div class="clip">
+      <div class="kicker">In the news</div>
+      <h2 id="headline"></h2>
+      <div class="byline" id="byline"></div>
+      <div class="newsnote"><b>Read it however you see it.</b> These headlines are deliberately open to interpretation — there's no single right answer. The point is to reason about which way each goal could move and why.</div>
+    </div>
+    <div class="grid">
+      <div><p class="prompt">For each goal, predict the most likely effect:</p><div id="rows"></div></div>
+      <div>
+        <svg viewBox="0 0 168 150" role="img" aria-label="Iron triangle">
+          <line class="edge" id="e-aq" x1="84" y1="20" x2="20" y2="130"/>
+          <line class="edge" id="e-ac" x1="84" y1="20" x2="148" y2="130"/>
+          <line class="edge" id="e-cq" x1="20" y1="130" x2="148" y2="130"/>
+          <circle cx="84" cy="20" r="7" fill="var(--access)"/><circle cx="148" cy="130" r="7" fill="var(--cost)"/><circle cx="20" cy="130" r="7" fill="var(--quality)"/>
+          <text x="84" y="12" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Access</text>
+          <text x="148" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Cost</text>
+          <text x="20" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Quality</text>
+        </svg>
+      </div>
+    </div>
+    <div class="actions"><button class="btn" id="reveal">Reveal analysis</button><button class="btn ghost" id="clear">Clear</button></div>
+    <div class="analysis" id="analysis"></div>
+    <div class="foot"><button class="btn ghost" id="prev">‹ Previous</button><button class="btn ghost" id="next">Next ›</button></div>
   </div>
-
-  <!-- ============ PART 1 ============ -->
-  <div id="part1">
-    <div class="card" id="card">
-      <div class="topbar"><span class="count" id="count"></span><span class="tag" id="tag"></span></div>
-      <div class="clip"><div class="kicker">In the news</div><h2 id="headline"></h2><div class="byline" id="byline"></div></div>
-      <div class="grid">
-        <div><p class="prompt">For each goal, predict the most likely effect:</p><div id="rows"></div></div>
-        <div>
-          <svg viewBox="0 0 168 150" role="img" aria-label="Iron triangle">
-            <line class="edge" id="e-aq" x1="84" y1="20" x2="20" y2="130"/>
-            <line class="edge" id="e-ac" x1="84" y1="20" x2="148" y2="130"/>
-            <line class="edge" id="e-cq" x1="20" y1="130" x2="148" y2="130"/>
-            <circle cx="84" cy="20" r="7" fill="var(--access)"/><circle cx="148" cy="130" r="7" fill="var(--cost)"/><circle cx="20" cy="130" r="7" fill="var(--quality)"/>
-            <text x="84" y="12" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Access</text>
-            <text x="148" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Cost</text>
-            <text x="20" y="146" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink)">Quality</text>
-          </svg>
-        </div>
-      </div>
-      <div class="actions"><button class="btn" id="reveal">Reveal analysis</button><button class="btn ghost" id="clear">Clear</button></div>
-      <div class="analysis" id="analysis"></div>
-      <div class="foot"><button class="btn ghost" id="prev">‹ Previous</button><button class="btn ghost" id="next">Next ›</button></div>
-    </div>
-    <div class="card summary" id="summary" style="display:none">
-      <h2>That's the full set</h2>
-      <p>The pattern to carry forward: naming <em>which</em> two goals trade off — and <em>which</em> stakeholder feels each one — is the whole skill.</p>
-      <button class="btn" id="restart">Start over</button>
-    </div>
-  </div>
-
-  <!-- ============ PART 2 : EXPENDITURES CALCULATOR ============ -->
-  <div id="part2" hidden>
-    <div class="card">
-      <div class="intro2">
-        <h2>The spending rectangle</h2>
-        <p class="eq">Total spending = <b>Price</b> per service × <b>Quantity</b> of services</p>
-        <p>The cost corner of the triangle is really one box: its height is the price of each service, its width is how much care gets used, and its area is the money. There are only two dials — move them and watch the total.</p>
-      </div>
-      <div class="calc">
-        <div>
-          <div class="panel-h">The two dials</div>
-          <div class="field">
-            <div class="lab"><b>Price per service</b><span class="val" id="valP"></span></div>
-            <input type="range" id="rangeP" min="50" max="600" step="5" value="250" aria-label="Price per service">
-            <div class="cap">This is essentially the reimbursement rate — what providers get paid per service.</div>
-          </div>
-          <div class="field">
-            <div class="lab"><b>Quantity of care</b><span class="val" id="valQ"></span></div>
-            <input type="range" id="rangeQ" min="1" max="20" step="0.5" value="8" aria-label="Quantity of services">
-            <div class="cap">How many services get used — driven by how many people are covered and how often they seek care.</div>
-          </div>
-          <div class="panel-h" style="margin-top:20px">Try a policy</div>
-          <div class="presets" id="presets"></div>
-        </div>
-        <div>
-          <div class="panel-h">Total health spending</div>
-          <div class="tlabel">Per year</div>
-          <div class="total" id="total"></div>
-          <div class="delta flat" id="delta"></div>
-          <div class="plotwrap">
-            <div class="axy">↑ Price per service</div>
-            <div class="plot"><div class="box" id="box"></div></div>
-            <div class="axx">Quantity of care →</div>
-          </div>
-        </div>
-      </div>
-      <div class="note"><div class="big" id="note"></div></div>
-      <div class="actions"><button class="btn ghost" id="resetCalc">Reset to baseline</button></div>
-    </div>
+  <div class="card summary" id="summary" style="display:none">
+    <h2>That's the full set</h2>
+    <p>The pattern to carry forward: naming <em>which</em> two goals trade off — and <em>which</em> stakeholder feels each one — is the whole skill.</p>
+    <button class="btn" id="restart">Start over</button>
   </div>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
-
-/* ---------------- PART 1 ---------------- */
 const DIR={up:{label:"Improves",color:"var(--up)"},down:{label:"Worsens",color:"var(--down)"},neutral:{label:"Neutral",color:"var(--neu)"},unsure:{label:"Undetermined",color:"var(--uns)"}};
 const DIMS=[{id:"access",name:"Access"},{id:"cost",name:"Cost"},{id:"quality",name:"Quality"}];
 const SCENARIOS=[
- {tag:"Policy",headline:"State votes to extend Medicaid-style coverage to undocumented immigrants",byline:"A large uninsured population would gain a route to coverage.",access:{a:"up",note:"A group that was mostly locked out gains a path to regular care."},cost:{a:"up",note:"Total public spending rises as newly covered people use more services. 'Worsens' here means higher system cost."},quality:{a:"unsure",note:"Depends on capacity. If clinics are already full, more patients can strain appointment availability rather than change the care itself."},tension:"e-ac",tlabel:"Access vs. Cost",tnote:"Covering more people is the clearest way to raise access — and the clearest way to raise total cost. That trade-off sits at the center of most coverage debates.",stake:"Government and payers absorb the new cost, providers gain patients, and patients gain access. The disagreement is really about who pays."},
- {tag:"Policy",headline:"Insurer expands telehealth coverage for mental health visits",byline:"Low-barrier virtual appointments, no waiting room.",access:{a:"up",note:"Convenient, low-barrier entry — a real gain for rural or time-pressed patients."},cost:{a:"unsure",note:"Each visit is often cheaper, but easier access can lift total volume, so the net cost is genuinely uncertain."},quality:{a:"down",note:"The core worry: convenience can mean a thinner evaluation and easier prescribing without in-person follow-up."},tension:"e-aq",tlabel:"Access vs. Quality",tnote:"The same feature that widens access — you can be seen in minutes from home — is what raises the quality concern. Access up, quality at risk.",stake:"Patients value the convenience, many clinicians worry about the depth of care, and payers watch utilization. One policy, three reactions."},
- {tag:"Policy",headline:"Medicare lowers reimbursement rates to hospitals to curb spending",byline:"A move aimed squarely at the cost line.",cost:{a:"up",note:"Program spending falls — an improvement from the payer's point of view."},access:{a:"down",note:"Some hospitals limit Medicare patients or cut service lines when margins tighten."},quality:{a:"unsure",note:"Thinner margins can pressure staffing and investment, but the effect varies a lot by system."},tension:"e-ac",tlabel:"Cost vs. Access",tnote:"Pushing the cost corner down pushes back on access: pay providers less and some of them see fewer of those patients.",stake:"Government saves money, providers get squeezed, and patients may feel it as a wait or a closed door. Lowering cost rarely comes free."},
- {tag:"Product",headline:"New specialty drug shows strong results — and a six-figure price tag",byline:"A clinical breakthrough arrives at a steep cost.",quality:{a:"up",note:"For the right patients, outcomes genuinely improve — this is real clinical value."},cost:{a:"up",note:"A very high price, multiplied across everyone who needs it, drives spending up fast."},access:{a:"unsure",note:"Depends on coverage rules. Strict prior authorization or high cost-sharing can keep it out of reach even when it works."},tension:"e-ac",tlabel:"Quality vs. Cost",tnote:"Product innovation often buys better quality — but the bill lands on the cost corner, and coverage rules then decide who actually gets access.",stake:"Manufacturers price to value, payers manage the budget hit, and patients sit between a better option and what their plan will cover."},
- {tag:"Policy",headline:"Health plan adds prior-authorization requirement for high-cost imaging",byline:"Approval now needed before an MRI is scheduled.",cost:{a:"up",note:"Screening out low-value scans trims spending — a cost improvement for the plan."},access:{a:"down",note:"Approval steps add delay and paperwork; some needed scans are postponed or dropped."},quality:{a:"unsure",note:"Fewer unnecessary scans can help; delayed necessary ones can hurt. It cuts both ways."},tension:"e-ac",tlabel:"Cost vs. Access",tnote:"Utilization management is a classic cost lever — and its cost is friction: slower, harder access, even when the care is appropriate.",stake:"Payers save and reduce waste, providers carry the administrative load, and patients face the delay. The label 'waste' depends on where you sit."},
- {tag:"Product",headline:"Retail chains open low-cost walk-in clinics across the region",byline:"Care beside the pharmacy aisle, evenings and weekends.",access:{a:"up",note:"Nights, weekends, no appointment — a clear widening of everyday access."},cost:{a:"unsure",note:"May divert costly ER visits (savings) or add visits that wouldn't have happened (more spending). Net effect is unsettled."},quality:{a:"unsure",note:"Fine for simple needs, but care split across many walk-ins can fragment the fuller picture a regular clinician would hold."},tension:"e-aq",tlabel:"Access vs. Continuity of care",tnote:"Convenience expands access, but scattering visits across many sites can chip at continuity — one strand of quality.",stake:"Patients gain convenience, primary-care providers worry about fragmented records, and payers weigh diverted ER use against new demand."}
+ {tag:"Policy",headline:"State votes to extend Medicaid-style coverage to undocumented immigrants",byline:"A large uninsured population would gain a route to coverage.",
+  access:{a:"up",note:"A group that was mostly locked out gains a path to regular care."},
+  cost:{a:"up",note:"Total public spending rises as newly covered people use more services. 'Worsens' here means higher system cost."},
+  quality:{a:"unsure",note:"This one genuinely depends on local capacity.",both:{up:"newly covered patients get steady primary care instead of delayed ER visits",down:"already-full clinics get more crowded, stretching each visit thinner"}},
+  tension:"e-ac",tlabel:"Access vs. Cost",tnote:"Covering more people is the clearest way to raise access — and the clearest way to raise total cost. That trade-off sits at the center of most coverage debates.",stake:"Government and payers absorb the new cost, providers gain patients, and patients gain access. The disagreement is really about who pays."},
+ {tag:"Policy",headline:"Insurer expands telehealth coverage for mental health visits",byline:"Low-barrier virtual appointments, no waiting room.",
+  access:{a:"up",note:"Convenient, low-barrier entry — a real gain for rural or time-pressed patients."},
+  cost:{a:"unsure",note:"The net effect is truly unsettled.",both:{up:"each virtual visit costs less than an in-person one",down:"the low barrier pulls in many more visits, raising total spend"}},
+  quality:{a:"down",note:"The core worry: convenience can mean a thinner evaluation and easier prescribing without in-person follow-up."},
+  tension:"e-aq",tlabel:"Access vs. Quality",tnote:"The same feature that widens access — you can be seen in minutes from home — is what raises the quality concern. Access up, quality at risk.",stake:"Patients value the convenience, many clinicians worry about the depth of care, and payers watch utilization. One policy, three reactions."},
+ {tag:"Policy",headline:"Medicare lowers reimbursement rates to hospitals to curb spending",byline:"A move aimed squarely at the cost line.",
+  cost:{a:"up",note:"Program spending falls — an improvement from the payer's point of view."},
+  access:{a:"down",note:"Some hospitals limit Medicare patients or cut service lines when margins tighten."},
+  quality:{a:"unsure",note:"Effects vary widely by system.",both:{up:"pressure pushes hospitals to cut low-value services and run leaner",down:"thinner margins squeeze staffing, equipment, and investment"}},
+  tension:"e-ac",tlabel:"Cost vs. Access",tnote:"Pushing the cost corner down pushes back on access: pay providers less and some of them see fewer of those patients.",stake:"Government saves money, providers get squeezed, and patients may feel it as a wait or a closed door. Lowering cost rarely comes free."},
+ {tag:"Product",headline:"New specialty drug shows strong results — and a six-figure price tag",byline:"A clinical breakthrough arrives at a steep cost.",
+  quality:{a:"up",note:"For the right patients, outcomes genuinely improve — this is real clinical value."},
+  cost:{a:"up",note:"A very high price, multiplied across everyone who needs it, drives spending up fast."},
+  access:{a:"unsure",note:"It hinges on the coverage rules.",both:{up:"insurers cover it broadly and patients reach a therapy they never had",down:"prior authorization or high cost-sharing puts it out of reach"}},
+  tension:"e-ac",tlabel:"Quality vs. Cost",tnote:"Product innovation often buys better quality — but the bill lands on the cost corner, and coverage rules then decide who actually gets access.",stake:"Manufacturers price to value, payers manage the budget hit, and patients sit between a better option and what their plan will cover."},
+ {tag:"Policy",headline:"Health plan adds prior-authorization requirement for high-cost imaging",byline:"Approval now needed before an MRI is scheduled.",
+  cost:{a:"up",note:"Screening out low-value scans trims spending — a cost improvement for the plan."},
+  access:{a:"down",note:"Approval steps add delay and paperwork; some needed scans are postponed or dropped."},
+  quality:{a:"unsure",note:"It cuts both ways.",both:{up:"fewer unnecessary scans and less over-testing",down:"a genuinely needed scan gets delayed or skipped"}},
+  tension:"e-ac",tlabel:"Cost vs. Access",tnote:"Utilization management is a classic cost lever — and its cost is friction: slower, harder access, even when the care is appropriate.",stake:"Payers save and reduce waste, providers carry the administrative load, and patients face the delay. The label 'waste' depends on where you sit."},
+ {tag:"Product",headline:"Retail chains open low-cost walk-in clinics across the region",byline:"Care beside the pharmacy aisle, evenings and weekends.",
+  access:{a:"up",note:"Nights, weekends, no appointment — a clear widening of everyday access."},
+  cost:{a:"unsure",note:"The net effect is unsettled.",both:{up:"convenient visits divert expensive emergency-room trips",down:"easy access adds visits that wouldn't otherwise have happened"}},
+  quality:{a:"unsure",note:"Depends how care gets coordinated.",both:{up:"quick, capable care for simple, well-defined problems",down:"care scattered across many sites fragments the fuller picture"}},
+  tension:"e-aq",tlabel:"Access vs. Continuity of care",tnote:"Convenience expands access, but scattering visits across many sites can chip at continuity — one strand of quality.",stake:"Patients gain convenience, primary-care providers worry about fragmented records, and payers weigh diverted ER use against new demand."}
 ];
 let i=0;const picks={};
 function chip(dir){const d=DIR[dir];return `<span class="chip" style="background:${d.color}">${d.label}</span>`;}
@@ -236,9 +185,11 @@ function render(){
 }
 function reveal(){
   const s=SCENARIOS[i];const mine=picks[i]||{};let html="";
-  DIMS.forEach(d=>{const exp=s[d.id].a;const you=mine[d.id];const yt=you?`you predicted ${DIR[you].label}${you===exp?" ✓":""}`:"no prediction";
-    html+=`<div class="aline"><div class="ahead"><span class="aname">${d.name}</span>${chip(exp)}<span class="yours">${yt}</span></div><p class="anote">${s[d.id].note}</p></div>`;});
-  html+=`<div class="tension"><b>Tension in play — ${s.tlabel}.</b> ${s.tnote}</div><p class="stake"><b>Who feels it:</b> ${s.stake}</p><p class="disc">These are the most likely directions, not guarantees — reasonable analysts can weigh them differently.</p>`;
+  DIMS.forEach(d=>{const dd=s[d.id];const exp=dd.a;const you=mine[d.id];const yt=you?`you predicted ${DIR[you].label}${you===exp?" ✓":""}`:"no prediction";
+    let block=`<div class="aline"><div class="ahead"><span class="aname">${d.name}</span>${chip(exp)}<span class="yours">${yt}</span></div><p class="anote">${dd.note}</p>`;
+    if(exp==="unsure"&&dd.both){block+=`<div class="both"><div class="bothlab">Why it could go either way</div><div class="bothrow"><span class="bi up">↑</span><span>Improves if ${dd.both.up}.</span></div><div class="bothrow"><span class="bi down">↓</span><span>Worsens if ${dd.both.down}.</span></div></div>`;}
+    block+=`</div>`;html+=block;});
+  html+=`<div class="tension"><b>Tension in play — ${s.tlabel}.</b> ${s.tnote}</div><p class="stake"><b>Who feels it:</b> ${s.stake}</p><p class="disc"><b>These are suggested directions to compare your thinking against — not the answer.</b> Real cases vary, and a well-argued read that differs from this can be just as right. The reasoning matters more than the match.</p>`;
   const an=$("analysis");an.innerHTML=html;an.classList.add("show");$(s.tension).classList.add("hot");
 }
 $("reveal").onclick=reveal;$("clear").onclick=()=>{picks[i]={};render();};
@@ -246,60 +197,6 @@ $("prev").onclick=()=>{if(i>0){i--;render();}};
 $("next").onclick=()=>{if(i===SCENARIOS.length-1){$("card").style.display="none";$("summary").style.display="";}else{i++;render();}};
 $("restart").onclick=()=>{i=0;render();};
 render();
-
-/* ---------------- PART 2 : EXPENDITURES CALCULATOR ---------------- */
-const P0=250,Q0=8,PMAX=600,QMAX=20;
-const TOT0=P0*Q0*1e6;
-const PRESETS=[
- {t:"Reset",p:P0,q:Q0},
- {t:"Negotiate lower prices (−30% price)",p:Math.round(P0*0.7),q:Q0},
- {t:"Expand coverage (+25% quantity)",p:P0,q:+(Q0*1.25).toFixed(1)},
- {t:"Prevention / manage use (−15% quantity)",p:P0,q:+(Q0*0.85).toFixed(1)},
- {t:"Cover new tech (+40% price)",p:Math.round(P0*1.4),q:Q0}
-];
-function fmtMoney(v){ if(v>=1e9) return "$"+(v/1e9).toFixed(1)+"B"; return "$"+Math.round(v/1e6)+"M"; }
-function updateCalc(){
-  const P=+$("rangeP").value, Q=+$("rangeQ").value, tot=P*Q*1e6;
-  $("valP").textContent="$"+P+" / service";
-  $("valQ").textContent=Q+" M services";
-  $("total").textContent=fmtMoney(tot);
-  $("box").style.height=(P/PMAX*100)+"%";
-  $("box").style.width=(Q/QMAX*100)+"%";
-  const d=(tot-TOT0)/TOT0*100;
-  const del=$("delta");
-  if(Math.abs(d)<0.5){del.className="delta flat";del.textContent="At baseline";}
-  else if(d>0){del.className="delta up";del.textContent="▲ "+Math.round(d)+"% vs baseline (more spending)";}
-  else{del.className="delta down";del.textContent="▼ "+Math.round(-d)+"% vs baseline (less spending)";}
-  // note
-  const dp=(P-P0)/P0, dq=(Q-Q0)/Q0;
-  const pstr=Math.abs(dp)<0.01?"unchanged":(dp>0?`up ${Math.round(dp*100)}%`:`down ${Math.round(-dp*100)}%`);
-  const qstr=Math.abs(dq)<0.01?"unchanged":(dq>0?`up ${Math.round(dq*100)}%`:`down ${Math.round(-dq*100)}%`);
-  let tie;
-  if(Math.abs(dp)<0.01&&Math.abs(dq)<0.01){
-    tie="This is the baseline. Slide a dial or pick a policy — total spending only moves if <b>price</b> or <b>quantity</b> moves.";
-  } else if(Math.abs(dp)>=Math.abs(dq)){
-    tie = dp<0
-      ? "You shrank the box by cutting <b>price</b> — that's a cut to the reimbursement providers live on. The cost corner improves, but providers push back and access can suffer."
-      : "You grew the box by raising <b>price</b> — often the cost of covering newer, pricier care. Quality may rise, but the total climbs.";
-  } else {
-    tie = dq<0
-      ? "You shrank the box by cutting <b>quantity</b> — less care used. Some of that is trimmed waste; some may be needed care that didn't happen, which is the access and quality risk."
-      : "You grew the box by raising <b>quantity</b> — more people getting more care. That's usually the price of widening access.";
-  }
-  $("note").innerHTML=`<b>Price</b> is ${pstr}; <b>quantity</b> is ${qstr}. ${tie}`;
-}
-$("presets").innerHTML=PRESETS.map((p,idx)=>`<button class="preset" data-i="${idx}">${p.t}</button>`).join("");
-$("presets").querySelectorAll(".preset").forEach(b=>b.onclick=()=>{const p=PRESETS[+b.dataset.i];$("rangeP").value=p.p;$("rangeQ").value=p.q;updateCalc();});
-$("rangeP").oninput=updateCalc;$("rangeQ").oninput=updateCalc;
-$("resetCalc").onclick=()=>{$("rangeP").value=P0;$("rangeQ").value=Q0;updateCalc();};
-updateCalc();
-
-/* ---------------- TABS ---------------- */
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
-  const p=t.dataset.part;
-  document.querySelectorAll(".tab").forEach(x=>{x.classList.toggle("active",x===t);x.setAttribute("aria-selected",x===t);});
-  $("part1").hidden=(p!=="1");$("part2").hidden=(p!=="2");
-});
 </script>
 </body>
 </html>
